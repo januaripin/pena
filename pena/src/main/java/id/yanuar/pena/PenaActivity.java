@@ -1,6 +1,8 @@
 package id.yanuar.pena;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,7 +10,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -30,6 +35,10 @@ import static android.view.View.VISIBLE;
  * halo@yanuar.id
  */
 public class PenaActivity extends AppCompatActivity {
+
+    private final int REQUEST_PERMISSION_STORAGE = 9182;
+    private boolean permissionsDenied = true;
+
     private PenaConfig config;
     private RelativeLayout layoutCanvas;
     private PenaCanvas penaCanvas;
@@ -55,8 +64,6 @@ public class PenaActivity extends AppCompatActivity {
             return;
         }
 
-        init();
-
         hslColorPicker.setColor(Color.BLACK);
         hslColorPicker.setColorSelectionListener(new OnColorSelectionListener() {
             @Override
@@ -74,6 +81,17 @@ public class PenaActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (permissionsDenied) {
+            enablePermissions();
+        } else {
+            init();
+        }
     }
 
     @Override
@@ -98,6 +116,20 @@ public class PenaActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_PERMISSION_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    permissionsDenied = false;
+                    init();
+                }
+                break;
+            }
+        }
     }
 
     private void init() {
@@ -179,5 +211,20 @@ public class PenaActivity extends AppCompatActivity {
         }
 
         return scale;
+    }
+
+    private void enablePermissions() {
+        String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSION_STORAGE);
+            }
+        } else {
+            init();
+        }
     }
 }

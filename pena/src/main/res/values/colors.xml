@@ -2,5 +2,5 @@
 <resources>
     <color name="penaPrimaryColor">#212121</color>
     <color name="penaPrimaryDarkColor">#000000</color>
-    <color name="penaSecondaryColor">#999999</color>
+    <color name="penaSecondaryColor">#E0E0E0</color>
 </resources>
