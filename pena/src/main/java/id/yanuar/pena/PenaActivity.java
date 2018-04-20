@@ -89,6 +89,8 @@ public class PenaActivity extends AppCompatActivity {
             save();
         } else if (id == R.id.action_pencil) {
             showColorPickerDialog();
+        }else if (id == R.id.action_clear){
+            init();
         }
         return super.onOptionsItemSelected(item);
     }
