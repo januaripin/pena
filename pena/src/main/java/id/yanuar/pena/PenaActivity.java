@@ -14,11 +14,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.madrapps.pikolo.HSLColorPicker;
@@ -26,9 +29,6 @@ import com.madrapps.pikolo.listeners.OnColorSelectionListener;
 
 import java.io.File;
 import java.io.FileOutputStream;
-
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
 
 /**
  * Created by Yanuar Arifin
@@ -43,7 +43,6 @@ public class PenaActivity extends AppCompatActivity {
     private RelativeLayout layoutCanvas;
     private PenaCanvas penaCanvas;
     private Toolbar toolbar;
-    private HSLColorPicker hslColorPicker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +51,6 @@ public class PenaActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         layoutCanvas = findViewById(R.id.layout_canvas);
-        hslColorPicker = findViewById(R.id.color_picker);
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -63,24 +61,6 @@ public class PenaActivity extends AppCompatActivity {
             finish();
             return;
         }
-
-        hslColorPicker.setColor(Color.BLACK);
-        hslColorPicker.setColorSelectionListener(new OnColorSelectionListener() {
-            @Override
-            public void onColorSelected(int i) {
-                penaCanvas.setPathPaintColor(i);
-            }
-
-            @Override
-            public void onColorSelectionStart(int i) {
-
-            }
-
-            @Override
-            public void onColorSelectionEnd(int i) {
-
-            }
-        });
     }
 
     @Override
@@ -108,12 +88,7 @@ public class PenaActivity extends AppCompatActivity {
         } else if (id == R.id.action_save) {
             save();
         } else if (id == R.id.action_pencil) {
-            int visibility = hslColorPicker.getVisibility();
-            if (visibility == VISIBLE) {
-                hslColorPicker.setVisibility(GONE);
-            } else {
-                hslColorPicker.setVisibility(VISIBLE);
-            }
+            showColorPickerDialog();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -226,5 +201,32 @@ public class PenaActivity extends AppCompatActivity {
         } else {
             init();
         }
+    }
+
+    private void showColorPickerDialog() {
+        View view = LayoutInflater.from(this).inflate(R.layout.color_picker, null);
+        HSLColorPicker hslColorPicker = view.findViewById(R.id.color_picker);
+        hslColorPicker.setColor(Color.BLACK);
+        hslColorPicker.setColorSelectionListener(new OnColorSelectionListener() {
+            @Override
+            public void onColorSelected(int i) {
+                penaCanvas.setPathPaintColor(i);
+            }
+
+            @Override
+            public void onColorSelectionStart(int i) {
+
+            }
+
+            @Override
+            public void onColorSelectionEnd(int i) {
+
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        builder.setNeutralButton("OK", null);
+        builder.create().show();
     }
 }
