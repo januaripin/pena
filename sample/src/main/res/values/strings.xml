@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Pena</string>
+    <string name="label_drawing_on_image">Sketching On Image</string>
+    <string name="label_drawing">Sketching</string>
+</resources>

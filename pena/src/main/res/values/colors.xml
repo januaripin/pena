@@ -1,0 +1,6 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<resources>
+    <color name="penaPrimaryColor">#212121</color>
+    <color name="penaPrimaryDarkColor">#000000</color>
+    <color name="penaSecondaryColor">#999999</color>
+</resources>

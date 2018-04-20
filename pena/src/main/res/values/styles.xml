@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="PenaBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionModeOverlay">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="PenaAppTheme" parent="PenaBaseTheme">
+        <item name="colorPrimary">@color/penaPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/penaPrimaryDarkColor</item>
+        <item name="colorAccent">@color/penaSecondaryColor</item>
+    </style>
+</resources>
