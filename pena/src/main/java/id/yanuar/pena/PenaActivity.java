@@ -46,7 +46,14 @@ public class PenaActivity extends AppCompatActivity {
         hslColorPicker = findViewById(R.id.color_picker);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        if (getIntent() == null || getIntent().getExtras() == null) {
+            finish();
+            return;
+        }
 
         init();
 
@@ -96,6 +103,10 @@ public class PenaActivity extends AppCompatActivity {
     private void init() {
         if (config == null) {
             Bundle bundle = getIntent().getExtras();
+            if (bundle == null) {
+                finish();
+                return;
+            }
             config = bundle.getParcelable(PenaConfig.class.getSimpleName());
         }
 
