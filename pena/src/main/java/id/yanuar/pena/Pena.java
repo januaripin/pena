@@ -23,6 +23,8 @@ public abstract class Pena {
         config.setBackgroundImage("");
         config.setFilenamePrefix("Pena");
         config.setFileDirectory("/");
+        config.setToolbarTitle("Pena Editor");
+        config.setOrientation(Pena.PORTRAIT);
     }
 
     public static class DrawingPenWithActivity extends Pena {
@@ -114,6 +116,16 @@ public abstract class Pena {
         return this;
     }
 
+    public Pena toolbarTitle(String title){
+        config.setToolbarTitle(title);
+        return this;
+    }
+
+    public Pena orientation(int orientation){
+        config.setOrientation(orientation);
+        return this;
+    }
+
     public Intent getIntent(Context context) {
         Intent intent = new Intent(context, PenaActivity.class);
         intent.putExtra(PenaConfig.class.getSimpleName(), config);
@@ -133,4 +145,7 @@ public abstract class Pena {
 
         return intent.getStringExtra(PenaConstants.EXTRA_FILE_PATH);
     }
+
+    public static int LANDSCAPE = 0;
+    public static int PORTRAIT = 1;
 }

@@ -3,6 +3,7 @@ package id.yanuar.pena;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -61,6 +62,18 @@ public class PenaActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        if (config == null) {
+            Bundle bundle = getIntent().getExtras();
+            if (bundle == null) {
+                finish();
+                return;
+            }
+            config = bundle.getParcelable(PenaConfig.class.getSimpleName());
+        }
+
+        setupScreen();
+        initCanvas();
     }
 
     @Override
@@ -70,8 +83,14 @@ public class PenaActivity extends AppCompatActivity {
         if (permissionsDenied) {
             enablePermissions();
         } else {
-            init();
+            initCanvas();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        initCanvas();
     }
 
     @Override
@@ -89,8 +108,8 @@ public class PenaActivity extends AppCompatActivity {
             save();
         } else if (id == R.id.action_pencil) {
             showColorPickerDialog();
-        }else if (id == R.id.action_clear){
-            init();
+        } else if (id == R.id.action_clear) {
+            initCanvas();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -102,23 +121,14 @@ public class PenaActivity extends AppCompatActivity {
             case REQUEST_PERMISSION_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     permissionsDenied = false;
-                    init();
+                    initCanvas();
                 }
                 break;
             }
         }
     }
 
-    private void init() {
-        if (config == null) {
-            Bundle bundle = getIntent().getExtras();
-            if (bundle == null) {
-                finish();
-                return;
-            }
-            config = bundle.getParcelable(PenaConfig.class.getSimpleName());
-        }
-
+    private void initCanvas() {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setDither(true);
@@ -141,12 +151,18 @@ public class PenaActivity extends AppCompatActivity {
             penaCanvas.setCanvasBackgroundBitmap(bitmap);
         }
 
+        layoutCanvas.removeAllViews();
         layoutCanvas.addView(penaCanvas);
+    }
+
+    private void setupScreen(){
+        toolbar.setTitle(config.getToolbarTitle());
+        setRequestedOrientation(config.getOrientation());
     }
 
     private void save() {
         try {
-            //init directory
+            //initCanvas directory
             String path = Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_PICTURES) + File.separator + config.getFileDirectory().concat("/");
 
@@ -201,7 +217,7 @@ public class PenaActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, permissions, REQUEST_PERMISSION_STORAGE);
             }
         } else {
-            init();
+            initCanvas();
         }
     }
 

@@ -12,6 +12,8 @@ public class PenaConfig implements Parcelable {
     private String backgroundImage;
     private int backgroundColor;
     private String fileDirectory;
+    private String toolbarTitle;
+    private int orientation;
 
     public PenaConfig() {
     }
@@ -48,6 +50,22 @@ public class PenaConfig implements Parcelable {
         this.backgroundColor = color;
     }
 
+    public String getToolbarTitle() {
+        return toolbarTitle;
+    }
+
+    public void setToolbarTitle(String toolbarTitle) {
+        this.toolbarTitle = toolbarTitle;
+    }
+
+    public int getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(int orientation) {
+        this.orientation = orientation;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -59,6 +77,9 @@ public class PenaConfig implements Parcelable {
         parcel.writeString(this.backgroundImage);
         parcel.writeInt(this.backgroundColor);
         parcel.writeString(this.fileDirectory);
+        parcel.writeString(this.toolbarTitle);
+        parcel.writeInt(this.orientation);
+
     }
 
     protected PenaConfig(Parcel in) {
@@ -66,6 +87,8 @@ public class PenaConfig implements Parcelable {
         backgroundImage = in.readString();
         backgroundColor = in.readInt();
         fileDirectory = in.readString();
+        toolbarTitle = in.readString();
+        orientation = in.readInt();
     }
 
     public static final Creator<PenaConfig> CREATOR = new Creator<PenaConfig>() {
