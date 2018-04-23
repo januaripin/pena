@@ -25,6 +25,7 @@ public abstract class Pena {
         config.setFileDirectory("/");
         config.setToolbarTitle("Pena Editor");
         config.setOrientation(Pena.PORTRAIT);
+        config.setFileFormat(Pena.JPEG);
     }
 
     public static class DrawingPenWithActivity extends Pena {
@@ -116,17 +117,28 @@ public abstract class Pena {
         return this;
     }
 
-    public Pena toolbarTitle(String title){
+    public Pena toolbarTitle(String title) {
         config.setToolbarTitle(title);
         return this;
     }
 
-    public Pena orientation(int orientation){
+    public Pena orientation(int orientation) {
         config.setOrientation(orientation);
         return this;
     }
 
+    public Pena fileFormat(int fileFormat) {
+        config.setFileFormat(fileFormat);
+        return this;
+    }
+
     public Intent getIntent(Context context) {
+        if (config.getOrientation() > 1) {
+            throw new IllegalArgumentException("Only support PORTRAIT or LANDSCAPE!");
+        }
+        if (config.getFileFormat() > 1){
+            throw new IllegalArgumentException("Only support JPEG or PNG!");
+        }
         Intent intent = new Intent(context, PenaActivity.class);
         intent.putExtra(PenaConfig.class.getSimpleName(), config);
         return intent;
@@ -148,4 +160,7 @@ public abstract class Pena {
 
     public static int LANDSCAPE = 0;
     public static int PORTRAIT = 1;
+
+    public static int JPEG = 0;
+    public static int PNG = 1;
 }

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
                         .fileDirectory(getString(R.string.app_name))
                         .orientation(Pena.PORTRAIT)
                         .toolbarTitle("Drawing On Image")
+                        .fileFormat(Pena.JPEG)
                         .start();
             }
         } else if (Pena.hasResult(requestCode, resultCode, data)) {
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 .fileDirectory(getString(R.string.app_name))
                 .toolbarTitle("Drawing Pad")
                 .orientation(Pena.LANDSCAPE)
+                .fileFormat(Pena.PNG)
                 .start();
     }
 }

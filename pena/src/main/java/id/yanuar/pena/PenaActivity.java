@@ -44,6 +44,7 @@ public class PenaActivity extends AppCompatActivity {
     private RelativeLayout layoutCanvas;
     private PenaCanvas penaCanvas;
     private Toolbar toolbar;
+    private Bitmap.CompressFormat fileFormat;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class PenaActivity extends AppCompatActivity {
 
         setupScreen();
         initCanvas();
+        setupProperties();
     }
 
     @Override
@@ -155,9 +157,19 @@ public class PenaActivity extends AppCompatActivity {
         layoutCanvas.addView(penaCanvas);
     }
 
-    private void setupScreen(){
+    private void setupScreen() {
         toolbar.setTitle(config.getToolbarTitle());
         setRequestedOrientation(config.getOrientation());
+    }
+
+    private void setupProperties() {
+        if (config.getFileFormat() == Pena.PNG) {
+            fileFormat = Bitmap.CompressFormat.PNG;
+        } else if (config.getFileFormat() == Pena.JPEG) {
+            fileFormat = Bitmap.CompressFormat.JPEG;
+        } else {
+            throw new IllegalArgumentException("Only support JPEG or PNG!");
+        }
     }
 
     private void save() {
@@ -170,13 +182,24 @@ public class PenaActivity extends AppCompatActivity {
             outDir.mkdirs();
 
             Long timestamp = System.currentTimeMillis() / 1000;
-            String filename = config.getFilenamePrefix() + "_" + timestamp + ".jpg";
+            StringBuilder filename = new StringBuilder();
+            filename.append(config.getFilenamePrefix());
+            filename.append("_");
+            filename.append(timestamp);
 
-            File file = new File(path + filename);
+            if (fileFormat == Bitmap.CompressFormat.PNG) {
+                filename.append(".png");
+            } else if (fileFormat == Bitmap.CompressFormat.JPEG) {
+                filename.append(".jpg");
+            } else {
+                throw new IllegalArgumentException("Only support JPEG or PNG!");
+            }
+
+            File file = new File(path + filename.toString());
 
             FileOutputStream fos = new FileOutputStream(file);
 
-            penaCanvas.getBitmap().compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            penaCanvas.getBitmap().compress(fileFormat, 100, fos);
 
             //flush output stream
             fos.flush();

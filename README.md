@@ -1,5 +1,5 @@
 # Pena
-A simple sketch pad to draw on android screen using a finger.
+A simple drawing pad to draw on android screen using a finger.
 
 ## Download [![](https://jitpack.io/v/januaripin/pena.svg)](https://jitpack.io/#januaripin/pena)
 
@@ -24,10 +24,13 @@ dependencies {
 ## Usage
 ```java
 Pena.create(this)
-   .filenamePrefix("Pena")
+   .filenamePrefix("Pena") // [prefix]_timestamp.jpg
    .backgroundImage("/storage/emulated/0/Pictures/Image.jpg") // local path image
    .backgroundColor(Color.WHITE) //ignore if you set background image
    .fileDirectory("Pena")
+   .toolbarTitle("Drawing Pad")
+   .orientation(Pena.PORTRAIT) // set orientation, default portrait
+   .fileFormat(Pena.PNG) // only support JPEG or PNG, default JPEG
    .start();
 ```
 ## Get Result

@@ -14,6 +14,7 @@ public class PenaConfig implements Parcelable {
     private String fileDirectory;
     private String toolbarTitle;
     private int orientation;
+    private int fileFormat;
 
     public PenaConfig() {
     }
@@ -66,6 +67,14 @@ public class PenaConfig implements Parcelable {
         this.orientation = orientation;
     }
 
+    public int getFileFormat() {
+        return fileFormat;
+    }
+
+    public void setFileFormat(int fileFormat) {
+        this.fileFormat = fileFormat;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -79,6 +88,7 @@ public class PenaConfig implements Parcelable {
         parcel.writeString(this.fileDirectory);
         parcel.writeString(this.toolbarTitle);
         parcel.writeInt(this.orientation);
+        parcel.writeInt(this.fileFormat);
 
     }
 
@@ -89,6 +99,7 @@ public class PenaConfig implements Parcelable {
         fileDirectory = in.readString();
         toolbarTitle = in.readString();
         orientation = in.readInt();
+        fileFormat = in.readInt();
     }
 
     public static final Creator<PenaConfig> CREATOR = new Creator<PenaConfig>() {
