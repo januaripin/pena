@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Pena</string>
     <string name="label_action_save">Save</string>
-    <string name="label_action_pencil">Pick Color</string>
-    <string name="label_action_clear">Clear</string>
+    <string name="label_eraser">Eraser</string>
+    <string name="label_stroke">Stroke</string>
+    <string name="label_color">Color</string>
 </resources>
