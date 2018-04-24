@@ -171,8 +171,16 @@ public class PenaCanvas extends View {
         mStrokePaint.setColor(strokeColor);
     }
 
+    public int getStrokeColor() {
+        return mStrokePaint.getColor();
+    }
+
     public void setStrokeWidth(float strokeWidth) {
         mStrokePaint.setStrokeWidth(strokeWidth);
+    }
+
+    public int getStrokeWidth() {
+        return (int) mStrokePaint.getStrokeWidth();
     }
 
     public Bitmap getBitmap() {

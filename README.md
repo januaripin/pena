@@ -47,6 +47,10 @@ Pena.create(this)
  }
 ```
 
+## Credits
+I used [ColorSeekBar](https://github.com/rtugeek/ColorSeekBar) library for Color Picker.
+I used [ImagePicker](https://github.com/esafirm/android-image-picker/) for Image Picker.
+
 License
 -------
    Copyright 2018 Yanuar Arifin

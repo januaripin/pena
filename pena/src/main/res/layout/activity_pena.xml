@@ -29,4 +29,36 @@
             android:layout_centerInParent="true" />
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_controller"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="?colorPrimary">
+
+        <com.rtugeek.android.colorseekbar.ColorSeekBar
+            android:id="@+id/color_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:barHeight="10dp" />
+
+        <SeekBar
+            android:id="@+id/stroke_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:max="100"
+            android:min="1" />
+    </RelativeLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#212121"
+        app:itemIconTint="#ffffff"
+        app:itemTextColor="#ffffff"
+        app:menu="@menu/bottom_nav" />
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.SeekBar;
+
+import com.rtugeek.android.colorseekbar.ColorSeekBar;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,8 +37,12 @@ public class PenaActivity extends AppCompatActivity {
 
     private PenaConfig mConfig;
     private PenaCanvas mPenaCanvas;
-    private Toolbar mToolbar;
     private Bitmap.CompressFormat mFileFormat;
+
+    private Toolbar mToolbar;
+    private BottomNavigationView mBottomNav;
+    private SeekBar mStrokeWidth;
+    private ColorSeekBar mColorPicker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +51,9 @@ public class PenaActivity extends AppCompatActivity {
 
         mToolbar = findViewById(R.id.toolbar);
         mPenaCanvas = findViewById(R.id.canvas);
+        mBottomNav = findViewById(R.id.bottom_nav_view);
+        mStrokeWidth = findViewById(R.id.stroke_width);
+        mColorPicker = findViewById(R.id.color_picker);
 
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
@@ -65,6 +77,39 @@ public class PenaActivity extends AppCompatActivity {
         setupScreen();
         initCanvas();
         setupProperties();
+
+        mBottomNav.setOnNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.action_pick_color) {
+                mStrokeWidth.setVisibility(View.GONE);
+                mColorPicker.setVisibility(View.VISIBLE);
+                mColorPicker.setColor(mPenaCanvas.getStrokeColor());
+            } else if (id == R.id.action_stroke) {
+                mColorPicker.setVisibility(View.GONE);
+                mStrokeWidth.setVisibility(View.VISIBLE);
+                mStrokeWidth.setProgress(mPenaCanvas.getStrokeWidth());
+            }
+            return false;
+        });
+
+        mColorPicker.setOnColorChangeListener((colorBar, alphaBar, color) -> mPenaCanvas.setStrokeColor(color));
+
+        mStrokeWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                mPenaCanvas.setStrokeWidth(i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     @Override
@@ -137,6 +182,9 @@ public class PenaActivity extends AppCompatActivity {
         } else {
             throw new IllegalArgumentException("Only support JPEG or PNG!");
         }
+
+        mColorPicker.setColor(mPenaCanvas.getStrokeColor());
+        mStrokeWidth.setProgress(mPenaCanvas.getStrokeWidth());
     }
 
     private void save() {
