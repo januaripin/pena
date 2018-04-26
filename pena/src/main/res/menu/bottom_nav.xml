@@ -10,4 +10,14 @@
         android:id="@+id/action_stroke"
         android:icon="@drawable/ic_pencil"
         android:title="@string/label_stroke" />
+
+    <item android:id="@+id/action_undo"
+        android:icon="@drawable/ic_undo"
+        android:title="@string/label_undo"/>
+
+    <item android:id="@+id/action_redo"
+        android:icon="@drawable/ic_redo"
+        android:title="@string/label_redo"/>
+
+
 </menu>

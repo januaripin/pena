@@ -84,10 +84,16 @@ public class PenaActivity extends AppCompatActivity {
                 mStrokeWidth.setVisibility(View.GONE);
                 mColorPicker.setVisibility(View.VISIBLE);
                 mColorPicker.setColor(mPenaCanvas.getStrokeColor());
+                item.setChecked(true);
             } else if (id == R.id.action_stroke) {
                 mColorPicker.setVisibility(View.GONE);
                 mStrokeWidth.setVisibility(View.VISIBLE);
-                mStrokeWidth.setProgress(mPenaCanvas.getStrokeWidth());
+                mStrokeWidth.setProgress((int) mPenaCanvas.getStrokeWidth());
+                item.setChecked(true);
+            } else if (id == R.id.action_undo) {
+                mPenaCanvas.undo();
+            } else if (id == R.id.action_redo) {
+                mPenaCanvas.redo();
             }
             return false;
         });
@@ -184,7 +190,7 @@ public class PenaActivity extends AppCompatActivity {
         }
 
         mColorPicker.setColor(mPenaCanvas.getStrokeColor());
-        mStrokeWidth.setProgress(mPenaCanvas.getStrokeWidth());
+        mStrokeWidth.setProgress((int) mPenaCanvas.getStrokeWidth());
     }
 
     private void save() {

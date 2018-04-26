@@ -48,17 +48,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:visibility="gone"
             android:max="100"
-            android:min="1" />
+            android:min="1"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_nav_view"
+        style="@style/PenaAppTheme.BottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#212121"
-        app:itemIconTint="#ffffff"
-        app:itemTextColor="#ffffff"
         app:menu="@menu/bottom_nav" />
 </LinearLayout>

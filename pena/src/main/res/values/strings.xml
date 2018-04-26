@@ -4,4 +4,6 @@
     <string name="label_eraser">Eraser</string>
     <string name="label_stroke">Stroke</string>
     <string name="label_color">Color</string>
+    <string name="label_undo">Undo</string>
+    <string name="label_redo">Redo</string>
 </resources>

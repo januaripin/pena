@@ -16,4 +16,11 @@
     <style name="PenaAppTheme.Toolbar" parent="PenaAppTheme">
         <item name="android:textColorSecondary">@android:color/white</item>
     </style>
+
+    <style name="PenaAppTheme.BottomNav">
+        <item name="android:background">#212121</item>
+        <item name="itemBackground">@drawable/bottom_navigation_bg</item>
+        <item name="itemIconTint">@drawable/bottom_navigation_txt_color</item>
+        <item name="itemTextColor">@drawable/bottom_navigation_txt_color</item>
+    </style>
 </resources>
